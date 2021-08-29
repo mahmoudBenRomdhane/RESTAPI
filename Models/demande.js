@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const responsableschema = new Schema({
+const demandeschema = new Schema({
     nom :{
         type:String ,
         required: true
@@ -15,22 +15,18 @@ const responsableschema = new Schema({
         type : String,
         required : true
     },
-    specialite: {
-        type : String,
-        required: true
-    },
     numTelephone :{
         type: Number ,
         required : true
     },
-    dateInscrption :{
+    dateDemande :{
         type : Date ,
         required : true,
-        
+        default : new Date()
     },
-    password : {
+    specialite:{
         type : String,
-        required : true  
+        required : true
     }
 })
-module.exports=mongoose.model('responsables',responsableschema);
+module.exports=mongoose.model('Demande',demandeschema);

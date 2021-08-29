@@ -7,7 +7,7 @@ const apprenantschema = new Schema({
         type : String ,
         required: true
     },
-    nom : {
+    username : {
         type : String ,
         required: true
     },
@@ -15,21 +15,30 @@ const apprenantschema = new Schema({
         type : String ,
         required : true
     },
-    type_Forfait : {
-        type : String ,
-        required : true 
-    },
     date_inscri : {
         type : Date,
-        default: Date.now 
+        required : true,
+        default : Date.now() 
     },
     date_Forfait : {
-        type : String,
+        type : Date,
         required : false
     },
     genre : {
         type : String,
         required : true
+    },
+    compteFacebook : {
+        type : String ,
+        required : false
+    },
+    nom : {
+        type : String ,
+        required: true
+    },
+    prenom : {
+        type : String ,
+        required: true
     }
 })
 module.exports=mongoose.model('Apprenant',apprenantschema);

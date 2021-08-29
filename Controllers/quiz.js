@@ -7,7 +7,7 @@ exports.addQuiz=(req, res, next)=>{
         difficulty : req.body.difficulty,
         time : req.body.time,
         questions : req.body.questions,
-        
+        id_responable : req.body.id_responable
     })
     qui.save();
 }

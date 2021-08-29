@@ -35,6 +35,11 @@ const courseSchema = new Schema({
     id_responable :{
         type : String ,
         required : true
+    },
+    vue : {
+        type : Number ,
+        required : true ,
+        default : 0
     }
 })
 module.exports=mongoose.model('Course',courseSchema);

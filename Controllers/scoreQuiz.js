@@ -18,3 +18,21 @@ exports.played = (req, res, next)=>{
         }
     })
 }
+exports.played_app = (req, res, next)=>{
+    ScoreQuiz.find({id_apprenant : req.params.id_apprenant },(err,data)=>{
+        if(err){
+            res.send("no Data found")
+        }else{
+            res.send(data)
+        }
+    })
+}
+exports.delete = (req, res, next)=>{
+    ScoreQuiz.findByIdAndRemove({ _id : req.params._id})
+    .then((res)=>{
+        console.log(res)
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+}

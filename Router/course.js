@@ -13,5 +13,8 @@ router.post('/updateCourse',CourseController.updateCourse) // update Course deta
 router.post('/updateCourseImage',storage,CourseController.updateCourseImage) //update Course Image
 router.get('/courses',checkAuth,CourseController.getallCourses) // tous les Cours avec pagination
 router.get('/courseCount',CourseController.getCount)
+router.get('/recherche/:rech',CourseController.recherche)
+router.get('/statsBestCourses',CourseController.getFirstFive)
+router.get('/updatevue/:_id/:vue',CourseController.updateVu)
 
 module.exports = router;

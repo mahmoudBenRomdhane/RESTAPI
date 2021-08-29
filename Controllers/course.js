@@ -5,9 +5,9 @@ exports.addCourse=(req, res, next)=>{
         nom : req.body.name ,
         image : 'http://localhost:3000/images/'+req.file.filename,
        Speciality : req.body.Speciality ,
-        descrption_text : req.body.descrption_text ,
+       descrption_text : req.body.descrption_text ,
         difficulty : req.body.difficulty,
-        id_responable : "605eae6f5ab5b9c75c16b451"
+        id_responable : req.body.id_responable
     })
     cour.save()
     .then(ss=>{
@@ -99,7 +99,47 @@ exports.getCount = (req, res, next)=>{
         res.json(count)
     })
 }
-
+exports.recherche = (req,res,next)=>{
+    rech = req.params.rech
+    const array = []
+    course.find()
+    .then(resp =>{
+        resp.forEach(cour=>{
+            if(cour.nom.includes(rech)){
+                array.push(cour)
+            }
+        })
+        res.send(array)
+    })
+}
+exports.getFirstFive = (req, res, next)=>{
+    course.find()
+    .then(result=>{
+        result.sort((a,b)=>{
+            if(a.vue > b.vue){
+                return -1 
+            }
+            if(b.vue >a.vue){
+                return 1 
+            }
+            else{
+                return 0 
+            }
+        })
+        
+        res.send(result.slice(0,6))
+    }).catch(err=>{
+        console.log(err)
+    })
+}
+exports.updateVu = (req, res, next)=>{
+    const _id = req.params._id;
+    newVue = parseInt(req.params.vue)
+    course.findByIdAndUpdate(_id,{
+        vue : newVue
+    })
+}
+//array1.forEach(element => console.log(element));
 
 /*   name: new FormControl(null),
 image: new FormControl(null),

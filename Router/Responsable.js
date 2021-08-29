@@ -8,6 +8,9 @@ router.get('/ResponsablesAcademique',ResponsableController.GetResponsables);  //
 router.delete('/ResponsablesAcademique/:_id',ResponsableController.deleteResponsable); // Supprimer Responsable
 router.post('/addResponsable',ResponsableController.addResponsable); //Ajouter Responsable
 router.get('/responsable/:_id',ResponsableController.GetResponsable)
+router.post('/LoginResponsable',ResponsableController.login)
+router.post('/changePassword',ResponsableController.CheckPassword),
+router.post('/updateProfile',ResponsableController.updateProfile)
 
 
 module.exports = router;

@@ -7,10 +7,13 @@ exports.addApprenant = (req, res, next)=>{
     .then(hashedPassword=>{
         const appre = new Apprenant({
             email : req.body.email ,
-            nom : req.body.nom ,
-            type_Forfait : req.body.type_Forfait ,
+            username : req.body.username ,
+            date_Forfait : req.body.date_Forfait ,
             password :hashedPassword,
-            genre : req.body.genre
+            genre : req.body.genre,
+            compteFacebook : req.body.compteFacebook,
+            nom : req.body.nom ,
+            prenom : req.body.nom
         })
         appre.save((err, doc)=>{
             if(!err){
@@ -51,6 +54,7 @@ exports.connect = (req,res,next)=>{
         if(!user){
             const error = new Error('A user with this email could not be found');
             error.statusCode = 401 ;
+            res.json(error)
             throw error ;
         }
         loadeduser = user
@@ -66,11 +70,48 @@ exports.connect = (req,res,next)=>{
             email : loadeduser.email ,
             userId : loadeduser._id.toString()
         },'Keytaaserveurlezemikounitwil',
-        {expiresIn:'1h'}
+        {expiresIn:'4h'}
         )
         res.status(200).json({token : token ,userId : loadeduser._id.toString() })
     })
     .catch(err=>{
         console.log(err);
+    })
+}
+exports.setForfait = (req, res, next)=>{
+    const _id = req.body._id ;
+    const forfait = req.body.forfait ;
+    Apprenant.findByIdAndUpdate(_id,{
+        date_Forfait : forfait
+    }).then(res=>{
+        console.log(res)
+    })
+}
+exports.getApprenants = (req, res, next)=>{
+    Apprenant.find()
+    .then(resp=>{
+        res.send(resp)
+    }).catch(err=>{
+        console.log(err)
+    })
+}
+exports.deleteApprenant = (req, res, next)=>{
+    const _id = req.params._id 
+    Apprenant.findByIdAndRemove({_id : _id})
+    .then(resp=>{
+        console.log(resp)
+    }).catch(err=>{
+        console.log(err)
+    })
+}
+exports.updateProfile = (req, res, next)=>{
+    const _id = req.body._id
+    bcrypt.hash(req.body.password,12)
+    .then(hashedPassword=>{
+        Apprenant.findByIdAndUpdate({_id},{
+            password : hashedPassword
+        }).then(res=>{
+            console.log(res)
+        })
     })
 }

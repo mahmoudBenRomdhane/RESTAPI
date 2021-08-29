@@ -1,4 +1,5 @@
 const Commentaire = require('../Models/commentaire');
+const socket = require('../socket');
 
 exports.addCommentaire = (req, res, next)=>{
     const c = new Commentaire({
@@ -7,6 +8,7 @@ exports.addCommentaire = (req, res, next)=>{
         id_sujet : req.body.id_sujet ,
         dateCommentaire : req.body.dateCommentaire
     })
+    socket.getio().emit("newcomment")
     c.save()
 }
 exports.getCommmentairesBySujet = (req, res, next)=>{

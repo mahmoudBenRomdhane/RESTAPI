@@ -23,7 +23,15 @@ const apprenantRouter = require('./Router/apprenant')
 const questionForumRouter = require('./Router/questionForum')
 const commentaireRouter = require('./Router/commentaire')
 const scoreQuizRouter = require('./Router/scoreQuiz')
+const demandeRouter = require('./Router/demande')
+const CvRouter = require('./Router/CV')
+const AbonnementCoursRouter = require('./Router/AbonnementCours')
+const NotificationRouter = require('./Router/Notification')
 
+app.use(NotificationRouter)
+app.use(AbonnementCoursRouter)
+app.use(CvRouter)
+app.use(demandeRouter)
 app.use(scoreQuizRouter)
 app.use(commentaireRouter)
 app.use(questionForumRouter)
@@ -40,8 +48,25 @@ mongoose
     'mongodb+srv://Mahmoud:Pino19055@cluster0.7l8yo.mongodb.net/pfe?authSource=admin&replicaSet=atlas-ylqs9x-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',{ useNewUrlParser: true }
 )
 .then(result=>{
-  app.listen(3000);
-})
+  console.log('MongoDB Connected...')})
 .catch(err=>{
   // console.log(err);
 })
+var server = require('http').createServer(app);
+const io = require('./socket').init(server);
+var allClients = [];
+
+io.on('connection', (socket) => {
+  console.log('user connected');
+  socket.on("connected",(data)=>{
+    console.log(data)
+  })
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+ 
+  });
+
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT);
